@@ -16,18 +16,18 @@ def fin_check():
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(DB)
     try:
-        response = table.query(IndexName='S3PATH-index',KeyConditionExpression=Key('S3PATH').eq(S3PATH))
+        response = table.get_item(Key = {'S3PATH':S3PATH})
     except ClientError as e:
         logging.error(e.response['Error']['Message'])
     else:
-        return len(response['Items']) > 0
+        return 'Item' in response['Items']
 
 def time_put(sec):
     dynamodb = boto3.resource('dynamodb')
 
     table = dynamodb.Table(DB)
 
-    response = table.put_item(Item={'User':'SyanaiShikaku', 'S3PATH': S3PATH, 'time': sec})
+    response = table.put_item(Item={'S3PATH': S3PATH, 'time': sec, 'User':'SyanaiShikaku'})
 
 
     return response
