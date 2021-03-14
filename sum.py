@@ -4,6 +4,7 @@ import os
 import cv2
 import logging
 from botocore.exceptions import ClientError
+from boto3.dynamodb.conditions import Key
 
 
 BUCKET = os.environ.get('BUCKET')
@@ -15,11 +16,11 @@ def fin_check():
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(DB)
     try:
-        response = table.get_item(IndexName='S3PATH-index',KeyConditionExpression=Key('S3PATH').eq(S3PATH))
+        response = table.query(IndexName='S3PATH-index',KeyConditionExpression=Key('S3PATH').eq(S3PATH))
     except ClientError as e:
         logging.error(e.response['Error']['Message'])
     else:
-        return 'Item' in response
+        return len(response['Items']) > 0
 
 def time_put(sec):
     dynamodb = boto3.resource('dynamodb')
