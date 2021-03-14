@@ -38,7 +38,7 @@ if __name__ == "__main__":
         tmpdir = tempfile.TemporaryDirectory()
         tmp = tmpdir.name + '/'
         tmp_file = tmp + 'tmp.mp4'
-        s3 = boto3.client('s3')
+        s3 = boto3.resource('s3')
         bucket = s3.Bucket(BUCKET)
         try:
             bucket.download_file(S3PATH, tmp_file)
