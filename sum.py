@@ -46,7 +46,7 @@ if __name__ == "__main__":
             cap = cv2.VideoCapture(tmp_file)                  # 動画を読み込む
             video_frame_count = cap.get(cv2.CAP_PROP_FRAME_COUNT) # フレーム数を取得する
             video_fps = cap.get(cv2.CAP_PROP_FPS)                 # フレームレートを取得する
-            video_len_sec = video_frame_count / video_fps
+            video_len_sec = int(video_frame_count // video_fps)
             response = time_put(video_len_sec)
         except Exception as e:
             logging.error('error_{}'.format(S3PATH))
