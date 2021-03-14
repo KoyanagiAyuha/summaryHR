@@ -48,5 +48,6 @@ if __name__ == "__main__":
             video_fps = cap.get(cv2.CAP_PROP_FPS)                 # フレームレートを取得する
             video_len_sec = video_frame_count / video_fps
             response = time_put(video_len_sec)
-        except:
+        except Exception as e:
             logging.error('error_{}'.format(S3PATH))
+            logging.error(str(e))
