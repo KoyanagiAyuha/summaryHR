@@ -20,7 +20,7 @@ def fin_check():
     except ClientError as e:
         logging.error(e.response['Error']['Message'])
     else:
-        return 'Item' in response['Items']
+        return 'Item' in response
 
 def time_put(sec):
     dynamodb = boto3.resource('dynamodb')
