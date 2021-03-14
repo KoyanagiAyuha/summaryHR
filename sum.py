@@ -15,7 +15,7 @@ def fin_check():
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(DB)
     try:
-        response = table.get_item(Key={'S3PATH': S3PATH})
+        response = table.get_item(IndexName='S3PATH-index',KeyConditionExpression=Key('S3PATH').eq(S3PATH))
     except ClientError as e:
         logging.error(e.response['Error']['Message'])
     else:
